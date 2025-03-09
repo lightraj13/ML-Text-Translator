@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translator QR Code</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .qr-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        .qr-code {
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #3f51b5;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .url {
+            font-weight: bold;
+            color: #3f51b5;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="qr-container">
+        <h1>ML Translator QR Code</h1>
+        <p>Scan this QR code to access the translator application</p>
+        <div class="qr-code">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUoAAAFKAQAAAABTUiuoAAACEklEQVR4nO1aS2rDQAx9kg1Z2jfoUeyr9Ui9gX2UHqCQWRZsVKQZx20XYSiEiI7ewvHnLR6IJ2mkkKASK9cygaByUBHUanBQEdRqcFChoIIeQOpBc7K74/XsSWsV+F9TJ1FcAYuMLNgJQGdvxZnWGvD/pqZiIVmGTUPW5RgVv/nSWgFug0oWnvXFQvYMAXfA9z42SRX1lsh7r+nwGQLugNE6tS+/g2a+BBCGvce0fJKlQvGklYMKw2q936j9xvtFgHQRmrHnltCZVrTuLbk9yzpCbfVJxW+PFsBBRT3k7NGnq161bmnxOu9yH788XSs3T0WO1iQbyuXaSbmIBSqi5c9bgxmsBMpidFotn52Xp2vloEIhS9Jm4sh/djqW15fDaq60tkztj5tuI6R+w0rdhnX80A8XIaTRjVZunoojExZbWU4UudWt6DIcUierVnrUmq470TxoB5/05KXTqJjBO8uEacSPCUYnpCcvYOiEnGjl5qk4O3gbDJ6pL38uLWJkQkfROpHb+Fvffi65JOoWHO6OB3WZlSxbIOuwMOqW092x6LKE5m8t4uZNaw24jd0xlUE8kc3lD4O50hrUE7dZ7pIHUZ61tkbtf7+Y3kh7eYAm2UmQdMjxQAEcVPx5d2wQO36t44eukqNuuYvWmv3T4Ufw8p8KHyuAg4q/745xPsTu+BcY1eCgIqjV4KAiqNXg5qlfNZon/DgcmooAAAAASUVORK5CYII=" alt="QR Code" style="width: 100%;">
+        </div>
+        <div class="url">http://localhost:5000</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Translator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="page-container">
+        <div class="translator-container">
+            <div class="header">
+                <h1>ML-Powered Translator</h1>
+                <p class="text-muted">Translate text between multiple languages using advanced machine learning models</p>
+                <div class="language-badges mt-3">
+                    <span class="language-badge">English</span>
+                    <span class="language-badge">French</span>
+                    <span class="language-badge">Spanish</span>
+                    <span class="language-badge">German</span>
+                    <span class="language-badge">Hindi</span>
+                </div>
+            </div>
+            
+            <div class="features-section">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-translate"></i>
+                    </div>
+                    <h3 class="feature-title">Advanced ML Translation</h3>
+                    <p class="feature-description">Powered by state-of-the-art machine learning models for accurate translations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h3 class="feature-title">Fast & Efficient</h3>
+                    <p class="feature-description">Optimized for speed with model preloading and GPU acceleration when available</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="bi bi-globe2"></i>
+                    </div>
+                    <h3 class="feature-title">Multiple Languages</h3>
+                    <p class="feature-description">Support for direct translation between English, French, Spanish, German, and Hindi</p>
+                </div>
+            </div>
+            
+            <div class="language-controls">
+                <select id="lang-pair" class="form-select">
+                    <optgroup label="English to Other Languages">
+                        {% for code, details in language_pairs.items() %}
+                            {% if code.startswith('en-') %}
+                                <option value="{{ code }}">{{ details[0] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </optgroup>
+                    <optgroup label="Other Languages to English">
+                        {% for code, details in language_pairs.items() %}
+                            {% if code.endswith('-en') and not code.startswith('en-') %}
+                                <option value="{{ code }}">{{ details[0] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </optgroup>
+                    <optgroup label="Other Language Pairs">
+                        {% for code, details in language_pairs.items() %}
+                            {% if not code.startswith('en-') and not code.endswith('-en') %}
+                                <option value="{{ code }}">{{ details[0] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </optgroup>
+                </select>
+                <button id="swap-btn" class="swap-btn" title="Swap languages">
+                    <i class="bi bi-arrow-left-right"></i>
+                </button>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="text-area-container">
+                        <label for="source-text" class="text-area-label">Source Text</label>
+                        <textarea id="source-text" class="text-area" placeholder="Enter text to translate..."></textarea>
+                        <div class="text-area-tools mt-2">
+                            <button id="clear-btn" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-x-lg"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="text-area-container">
+                        <label for="translated-text" class="text-area-label">Translated Text</label>
+                        <textarea id="translated-text" class="text-area" placeholder="Translation will appear here..." readonly></textarea>
+                        <div class="text-area-tools mt-2">
+                            <button id="copy-btn" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-clipboard"></i> Copy
+                            </button>
+                            <button id="speak-btn" class="btn btn-sm btn-outline-secondary ms-2">
+                                <i class="bi bi-volume-up"></i> Speak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center mt-3 mb-4">
+                <button id="translate-btn" class="translate-btn">
+                    <i class="bi bi-translate"></i> Translate
+                </button>
+            </div>
+            
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p class="mt-2">Translating... Models are preloaded for faster translation.</p>
+            </div>
+            
+            <div class="performance-info mt-3 text-center">
+                <div class="badge bg-primary">Optimized for Speed</div>
+                <div class="badge bg-success ms-2">Model Preloading</div>
+                <div class="badge bg-info ms-2">Fast Translation</div>
+            </div>
+            
+            <div class="mt-4">
+                <div class="accordion" id="translationAccordion">
+                    <div class="accordion-item mt-2">
+                        <h2 class="accordion-header" id="performanceHeading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#performanceCollapse" aria-expanded="false" aria-controls="performanceCollapse">
+                                Performance Statistics
+                            </button>
+                        </h2>
+                        <div id="performanceCollapse" class="accordion-collapse collapse" aria-labelledby="performanceHeading" data-bs-parent="#translationAccordion">
+                            <div class="accordion-body">
+                                <div id="performance-stats">
+                                    <p>Translation performance statistics will appear here after you perform translations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="qr-section">
+                <h4>Scan to access this translator</h4>
+                <p class="text-muted">Use your phone's camera to scan this QR code</p>
+                <div class="qr-code">
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/translator.js"></script>
+</body>
+</html> 
